@@ -1,0 +1,4 @@
+local $(SML_LIB)/basis/basis.mlb
+      quantum.mlb
+in quantum_ex1.sml
+end

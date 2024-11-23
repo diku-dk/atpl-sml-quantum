@@ -64,5 +64,8 @@ struct
          mapi (padi w) b
       end
   fun seq (a:t,b:t) : t = mapi2 (fn (i,a,b) => a ^ sep i ^ b) (a,b)
-  fun toString (a:t) : string = String.concatWith "\n" a
+  fun toString (a:t) : string =
+      let val a = mapi (padi (width a + 4)) a
+      in String.concatWith "\n" a
+      end
 end
