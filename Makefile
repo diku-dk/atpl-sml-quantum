@@ -1,5 +1,9 @@
 SMLPKG = smlpkg
 
+.PHONY: all
+all: lib
+	$(MAKE) -C src all
+
 .PHONY: test
 test: lib
 	$(MAKE) -C src test
