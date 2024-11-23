@@ -34,7 +34,8 @@ jobs:
       - name: Install dependencies (macos)
         if: ${{ env.OS == 'darwin' }}
         run: |
-          brew install gmp
+          arch -x86_64 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+          arch -x86_64 /usr/local/bin/brew install gcc
 
       - name: Install MLKit and smlpkg
         working-directory: ${{ env.RUNHOME }}
