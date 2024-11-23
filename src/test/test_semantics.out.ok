@@ -1,9 +1,9 @@
 Testing: Semantics
 *** Example: Double Beam-Splitter
 Diagram of g = H oo H:
-.---. .---.
-| H |-| H |
-'---' '---'
+  .---. .---.  
+--| H |-| H |--
+  '---' '---'  
 Semantics:
 1 0
 0 1
@@ -15,13 +15,13 @@ State Distribution:
 ***
 *** Example: Two Qubits (NOT on second qubit)
 Diagram of g = (H oo H) ** X:
-.---. .---.
-| H |-| H |
-'---' '---'
-           
-   .---.   
----| X |---
-   '---'   
+  .---. .---.  
+--| H |-| H |--
+  '---' '---'  
+               
+     .---.     
+-----| X |-----
+     '---'     
 Semantics:
 0 1 0 0
 1 0 0 0
@@ -37,13 +37,13 @@ State Distribution:
 ***
 *** Example: Two Qubits Swapped
 Diagram of g = (H oo H) ** X oo SW:
-.---. .---.      
-| H |-| H |-.   .
-'---' '---'  \ / 
-              /  
-   .---.     / \ 
----| X |----'   '
-   '---'         
+  .---. .---.        
+--| H |-| H |-.   .--
+  '---' '---'  \ /   
+                /    
+     .---.     / \   
+-----| X |----'   '--
+     '---'           
 Semantics:
 0 1 0 0
 0 0 0 1
@@ -59,17 +59,17 @@ State Distribution:
 ***
 *** Example: Swap
 Diagram of g = I ** SW oo SW ** I:
-           
-------.   .
-       \ / 
-        /  
-       / \ 
-.   .-'   '
- \ /       
-  /        
- / \       
-'   '------
-           
+               
+--------.   .--
+         \ /   
+          /    
+         / \   
+--.   .-'   '--
+   \ /         
+    /          
+   / \         
+--'   '--------
+               
 Semantics:
 1 0 0 0 0 0 0 0
 0 0 1 0 0 0 0 0
@@ -93,13 +93,13 @@ State Distribution:
 ***
 *** Example: SwapSwap
 Diagram of g = SW oo X ** X oo SW:
-      .---.      
-.   .-| X |-.   .
- \ /  '---'  \ / 
-  /           /  
- / \  .---.  / \ 
-'   '-| X |-'   '
-      '---'      
+        .---.        
+--.   .-| X |-.   .--
+   \ /  '---'  \ /   
+    /           /    
+   / \  .---.  / \   
+--'   '-| X |-'   '--
+        '---'        
 Semantics:
 0 0 0 1
 0 0 1 0
@@ -115,13 +115,13 @@ State Distribution:
 ***
 *** Example: Swap with Y
 Diagram of g = SW oo Y ** X oo SW:
-      .---.      
-.   .-| Y |-.   .
- \ /  '---'  \ / 
-  /           /  
- / \  .---.  / \ 
-'   '-| X |-'   '
-      '---'      
+        .---.        
+--.   .-| Y |-.   .--
+   \ /  '---'  \ /   
+    /           /    
+   / \  .---.  / \   
+--'   '-| X |-'   '--
+        '---'        
 Semantics:
  0  0  0 ~i
  0  0  i  0
@@ -138,13 +138,13 @@ State Distribution:
 The following two systems are identical
 *** Example: System 1
 Diagram of g = I ** H oo CX oo Z ** Z oo CX oo I ** H:
-            .---.            
---------*---| Z |---*--------
-        |   '---'   |        
-        |           |        
-.---. .-+-. .---. .-+-. .---.
-| H |-| X |-| Z |-| X |-| H |
-'---' '---' '---' '---' '---'
+              .---.              
+----------*---| Z |---*----------
+          |   '---'   |          
+          |           |          
+  .---. .-+-. .---. .-+-. .---.  
+--| H |-| X |-| Z |-| X |-| H |--
+  '---' '---' '---' '---' '---'  
 Semantics:
 0 1 0 0
 1 0 0 0
@@ -160,13 +160,13 @@ State Distribution:
 ***
 *** Example: System 2
 Diagram of g = I ** X:
-     
------
-     
-     
-.---.
-| X |
-'---'
+         
+---------
+         
+         
+  .---.  
+--| X |--
+  '---'  
 Semantics:
 0 1 0 0
 1 0 0 0
