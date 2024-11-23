@@ -1,0 +1,9 @@
+local $(SML_LIB)/basis/basis.mlb
+      ../lib/github.com/diku-dk/sml-matrix/matrix.mlb
+      ../lib/github.com/diku-dk/sml-complex/complex.mlb
+in diagram.sml
+   circuit.sig
+   circuit.sml
+   semantics.sig
+   semantics.sml
+end

@@ -1,0 +1,6 @@
+require {
+  github.com/diku-dk/sml-matrix 0.1.0 #06c58c733525071eb137f5ce5e61c330fdda890c
+  github.com/diku-dk/sml-complex 0.1.2 #d841f167cb4580358b425ab803e7671b4a2b6b12
+  github.com/diku-dk/sml-random 0.1.1 #0a0f79c857207f948e89e18b320f162e30e1fdaf
+  github.com/diku-dk/sml-setmap 0.1.2 #8549d0d64a4b63b1e7fba3e545c5cac89c2ff447
+}

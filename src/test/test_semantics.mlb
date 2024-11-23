@@ -1,0 +1,5 @@
+local $(SML_LIB)/basis/basis.mlb
+      ../quantum.mlb
+in
+  test_semantics.sml
+end

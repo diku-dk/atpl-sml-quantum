@@ -1,0 +1,7 @@
+local $(SML_LIB)/basis/basis.mlb
+      ../diagram.sml
+      ../circuit.sig
+      ../circuit.sml
+in
+  test_circuit.sml
+end
