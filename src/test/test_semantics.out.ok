@@ -10,8 +10,8 @@ Semantics:
 Initial state of |0>: 1 0
 eval g |0> = 1 0
 State Distribution:
-|0> : 1.0
-|1> : 0.0
+|0> : 1
+|1> : 0
 ***
 *** Example: Two Qubits (NOT on second qubit)
 Diagram of g = (H oo H) ** X:
@@ -30,10 +30,10 @@ Semantics:
 Initial state of |01>: 0 1 0 0
 eval g |01> = 1 0 0 0
 State Distribution:
-|00> : 1.0
-|01> : 0.0
-|10> : 0.0
-|11> : 0.0
+|00> : 1
+|01> : 0
+|10> : 0
+|11> : 0
 ***
 *** Example: Two Qubits Swapped
 Diagram of g = (H oo H) ** X oo SW:
@@ -52,10 +52,10 @@ Semantics:
 Initial state of |01>: 0 1 0 0
 eval g |01> = 1 0 0 0
 State Distribution:
-|00> : 1.0
-|01> : 0.0
-|10> : 0.0
-|11> : 0.0
+|00> : 1
+|01> : 0
+|10> : 0
+|11> : 0
 ***
 *** Example: Swap
 Diagram of g = I ** SW oo SW ** I:
@@ -82,14 +82,14 @@ Semantics:
 Initial state of |011>: 0 0 0 1 0 0 0 0
 eval g |011> = 0 0 0 0 0 1 0 0
 State Distribution:
-|000> : 0.0
-|001> : 0.0
-|010> : 0.0
-|011> : 0.0
-|100> : 0.0
-|101> : 1.0
-|110> : 0.0
-|111> : 0.0
+|000> : 0
+|001> : 0
+|010> : 0
+|011> : 0
+|100> : 0
+|101> : 1
+|110> : 0
+|111> : 0
 ***
 *** Example: SwapSwap
 Diagram of g = SW oo X ** X oo SW:
@@ -108,10 +108,10 @@ Semantics:
 Initial state of |10>: 0 0 1 0
 eval g |10> = 0 1 0 0
 State Distribution:
-|00> : 0.0
-|01> : 1.0
-|10> : 0.0
-|11> : 0.0
+|00> : 0
+|01> : 1
+|10> : 0
+|11> : 0
 ***
 *** Example: Swap with Y
 Diagram of g = SW oo Y ** X oo SW:
@@ -130,10 +130,10 @@ Semantics:
 Initial state of |10>: 0 0 1 0
 eval g |10> = 0 i 0 0
 State Distribution:
-|00> : 0.0
-|01> : 1.0
-|10> : 0.0
-|11> : 0.0
+|00> : 0
+|01> : 1
+|10> : 0
+|11> : 0
 ***
 The following two systems are identical
 *** Example: System 1
@@ -153,10 +153,10 @@ Semantics:
 Initial state of |10>: 0 0 1 0
 eval g |10> = 0 0 0 1
 State Distribution:
-|00> : 0.0
-|01> : 0.0
-|10> : 0.0
-|11> : 1.0
+|00> : 0
+|01> : 0
+|10> : 0
+|11> : 1
 ***
 *** Example: System 2
 Diagram of g = I ** X:
@@ -175,8 +175,8 @@ Semantics:
 Initial state of |10>: 0 0 1 0
 eval g |10> = 0 0 0 1
 State Distribution:
-|00> : 0.0
-|01> : 0.0
-|10> : 0.0
-|11> : 1.0
+|00> : 0
+|01> : 0
+|10> : 0
+|11> : 1
 ***

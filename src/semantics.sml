@@ -11,6 +11,12 @@ structure Semantics :> SEMANTICS = struct
   fun pp_c (c:complex) : string =
       C.fmtBrief (StringCvt.GEN(SOME 4)) c
 
+  fun pp_r (r:real) =
+      let val s = Real.toString r
+      in if String.isSuffix ".0" s then String.extract(s,0,SOME(size s-2))
+         else s
+      end
+
   fun pp_mat (m:mat) : string =
       let val m = M.map pp_c m
           val sz = foldl (fn (e,a) => Int.max(a,size e)) 1
@@ -111,7 +117,7 @@ structure Semantics :> SEMANTICS = struct
 
   fun pp_dist (d:dist) : string =
       Vector.foldr (fn ((k,r),a) =>
-                       (pp_ket k ^ " : " ^ Real.toString r) :: a) nil d
+                       (pp_ket k ^ " : " ^ pp_r r) :: a) nil d
                    |> String.concatWith "\n"
 
   fun toKet (n:int, i:int) : ket =
