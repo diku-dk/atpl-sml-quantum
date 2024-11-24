@@ -32,26 +32,37 @@ Here is an example run:
 $ cd src
 $ mlkit quantum_ex1.mlb
 ...
-$ ./run
-Circuit for d = I ** H oo CX oo Z ** Z oo CX oo I ** H:
+bash-3.2$ ./run
+Circuit for c = (I ** H oo CX oo Z ** Z oo CX oo I ** H) ** I oo I ** SW oo CX ** Y:
               .---.
-----------*---| Z |---*----------
-          |   '---'   |
-          |           |
-  .---. .-+-. .---. .-+-. .---.
---| H |-| X |-| Z |-| X |-| H |--
-  '---' '---' '---' '---' '---'
-Semantics of d:
-0 1 0 0
-1 0 0 0
-0 0 0 1
-0 0 1 0
-Result distribution when evaluating d on |01> :
-|00> : 1
-|01> : 0
-|10> : 0
-|11> : 0
-...
+----------*---| Z |---*-----------------*----
+          |   '---'   |                 |
+          |           |                 |
+  .---. .-+-. .---. .-+-. .---.       .-+-.
+--| H |-| X |-| Z |-| X |-| H |-.   .-| X |--
+  '---' '---' '---' '---' '---'  \ /  '---'
+                                  /
+                                 / \  .---.
+--------------------------------'   '-| Y |--
+                                      '---'
+Semantics of c:
+~i  0  0  0  0  0  0  0
+ 0  0  i  0  0  0  0  0
+ 0 ~i  0  0  0  0  0  0
+ 0  0  0  i  0  0  0  0
+ 0  0  0  0  0 ~i  0  0
+ 0  0  0  0  0  0  0  i
+ 0  0  0  0 ~i  0  0  0
+ 0  0  0  0  0  0  i  0
+Result distribution when evaluating c on |101> :
+|000> : 0
+|001> : 0
+|010> : 0
+|011> : 0
+|100> : 1
+|101> : 0
+|110> : 0
+|111> : 0
 ```
 
 ## Exercises
@@ -110,9 +121,16 @@ Result distribution when evaluating d on |01> :
    `oo` _D_) ** (_B_ `oo` _E_), given appropriate dimension restrictions, to
    make your optimiser recognise more opportunities.
 
-8. Write a recursive function `reverse` that takes a circuit and returns the
-   reversed circuit using the property `reverse` (_A_ `oo` _B_) = (`reverse` _B_)
-   `oo` (`reverse` _A_), for any "unitary" _A_ and _B_.
+8. Write a recursive function `inverse` that takes a circuit and returns the
+   inversed circuit using the property `inverse` (_A_ `oo` _B_) = (`inverse`
+   _B_) `oo` (`inverse` _A_), for any "unitary" _A_ and _B_. Notice that only
+   some of the basic gates have the property that they are their own inverse
+   (e.g., Y and H) . For others, such as the T gate, this property does not
+   hold, which can be dealt with by extending the circuit data type to contain a
+   TI gate (an inverse T-gate defined as the conjugated transpose of the T-gate).
+
+9. Investigate how large circuits (in terms of the number of qubits) you may
+   simulate in less than 10 seconds on a standard computer.
 
 ## Project Suggestions
 
