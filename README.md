@@ -134,7 +134,7 @@ Result distribution when evaluating c on |101> :
 
 ## Project Suggestions
 
-1. Implement tooling, based on the [4] (but simplified) to find alternative
+1. Implement tooling, based on [4] (but simplified) to find alternative
    (sub-)circuits of degree _n_, for some small _n_.
 
 2. Investigate possibilities for identifying if two qubits are entangled by a
