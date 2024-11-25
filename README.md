@@ -117,7 +117,7 @@ Result distribution when evaluating c on |101> :
 
 7. Write an "optimiser" that takes a circuit and replaces it with an "optimised"
    circuit with the same or fewer gates. For instance, incorporate the identity
-   `I = H ** H`. Maybe use the identity (_A_ `**` _B_ `oo` _D_ ** _E_ = (_A_
+   `I = H oo H`. Maybe use the identity _A_ `**` _B_ `oo` _D_ ** _E_ = (_A_
    `oo` _D_) ** (_B_ `oo` _E_), given appropriate dimension restrictions and associativity of `**`, to
    make your optimiser recognise more opportunities.
 
