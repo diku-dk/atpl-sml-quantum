@@ -115,10 +115,10 @@ Result distribution when evaluating c on |101> :
    `Diagram` structure and extend the `Circuit.draw` function to draw controlled
    control-gates using the new functionality.
 
-7. Write an "optimiser" that takes a circuit and replaced it with an "optimised"
-   circuits with the same or fewer gates. For instance, incorporate the identity
-   `I = H ** H`. Maybe use the identity (_A_ `**` _B_ `oo` _D_ ** _E_ = (_A_
-   `oo` _D_) ** (_B_ `oo` _E_), given appropriate dimension restrictions, to
+7. Write an "optimiser" that takes a circuit and replaces it with an "optimised"
+   circuit with the same or fewer gates. For instance, incorporate the identity
+   `I = H oo H`. Maybe use the identity _A_ `**` _B_ `oo` _D_ ** _E_ = (_A_
+   `oo` _D_) ** (_B_ `oo` _E_), given appropriate dimension restrictions and associativity of `**`, to
    make your optimiser recognise more opportunities.
 
 8. Write a recursive function `inverse` that takes a circuit and returns the
@@ -166,7 +166,7 @@ Result distribution when evaluating c on |101> :
 
 ## Project Suggestions
 
-1. Implement tooling, based on the [4] (but simplified) to find alternative
+1. Implement tooling, based on [4] (but simplified) to find alternative
    (sub-)circuits of degree _n_, for some small _n_.
 
 2. Investigate possibilities for identifying if two qubits are entangled by a
