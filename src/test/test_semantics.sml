@@ -52,6 +52,10 @@ fun run t (g:t) (k:ket) : unit =
         val () = print ("eval g " ^ pp_ket k ^ " = " ^ pp_state s' ^ "\n")
         val () = print ("State Distribution:\n")
         val () = print (pp_dist(measure_dist s') ^ "\n")
+        val () = print ("Testing interpretation against semantics: ")
+        val s'' = interp g s
+        val () = if pp_state s'' = pp_state s' then print "OK\n"
+                 else print "ERR\n"
         val () = print "***\n"
     in ()
     end

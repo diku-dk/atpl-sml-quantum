@@ -6,4 +6,6 @@ in diagram.sml
    circuit.sml
    semantics.sig
    semantics.sml
+   futhark.sml
+   comp.sml
 end

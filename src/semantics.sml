@@ -136,4 +136,56 @@ structure Semantics :> SEMANTICS = struct
           val n = log2 (Vector.length s)
       in Vector.mapi (fn (i,p) => (toKet(n,i), p)) v
       end
+
+  (* Interpreter *)
+
+  type vec = state
+
+  fun flatten (a:mat) : vec =
+      let val rows = M.nRows a
+          val cols = M.nCols a
+      in Vector.tabulate(rows * cols,
+                         fn i => M.sub(a,i div cols,i mod cols))
+      end
+
+  fun unflatten (r,c) (v:vec) : mat =
+      if Vector.length v <> r * c then raise Fail ("unflatten(" ^ Int.toString r ^ "," ^
+                                                   Int.toString c ^ ",[" ^ pp_state v ^ "])")
+      else M.tabulate(r,c,fn (i,j) => Vector.sub(v,i*c+j)) (* row-major *)
+
+  fun unvec (r:int,c:int) (v:vec) : mat =  (* create NxN matrix from vector with stacked column vectors *)
+      unflatten (r,c) v |> M.transpose
+
+  fun vec (a:mat) : vec =
+      M.transpose a |> flatten
+
+  fun vecSplit (v:vec) : vec * vec =
+      let val n = Vector.length v div 2
+      in (VectorSlice.vector(VectorSlice.slice(v,0,SOME n)),
+          VectorSlice.vector(VectorSlice.slice(v,n,NONE)))
+      end
+
+  fun mapRows f (a:mat) : mat =
+      List.tabulate(M.nRows a,
+                    fn i => f(M.row i a))
+                   |> M.fromVectorList
+
+  fun interp (t:Circuit.t) (v:vec) : vec =
+      case t of
+          Circuit.Seq(t1,t2) => interp t2 (interp t1 v)
+        | Circuit.Tensor(A,B) =>
+          let val Af = interp A
+              val Bf = interp B
+              val V = unvec (pow2(Circuit.dim A),pow2(Circuit.dim B)) v
+              val W = mapRows Bf (M.transpose V)
+              val Y = mapRows Af (M.transpose W)
+          in vec Y
+          end
+        | Circuit.C A =>
+          let val (v1,v2) = vecSplit v
+          in Vector.concat[v1,interp A v2]
+          end
+        | Circuit.I => v
+        | _ => eval t v
+
 end

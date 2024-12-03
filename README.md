@@ -132,6 +132,38 @@ Result distribution when evaluating c on |101> :
 9. Investigate how large circuits (in terms of the number of qubits) you may
    simulate in less than 10 seconds on a standard computer.
 
+10. Compare the performance of the Kronecker-free interpreter with the
+    performance of the `eval` function.
+
+11. Synthesize a Futhark simulator for a specific quantum circuit and run it
+    with different state vectors. You may start by copying the files
+    `comp_ex1.sml` and `comp_ex1.mlb` available in the `src` folder. The
+    `Makefile` contains code for generating a file `ex1.fut` containing a
+    synthesized function for simulating the circuit defined in
+    `comp_ex1.sml`. You may generate the file by writing `make ex1.fut`. To load
+    the file `ex1.fut` into the Futhark REPL, execute the following commands
+    (after having installed [Futhark](http://futhark-lang.org):
+
+	```
+	$ make clean ex1.fut
+	$ (cd fut; futhark pkg sync)
+	$ futhark repl ex1.fut
+[0]> m
+[[(0.0, -0.9999999999999998), (0.0, 0.0), (0.0, 0.0), (0.0, 0.0), (0.0, 0.0), (0.0, 0.0), (0.0, 0.0), (0.0, 0.0)],
+ [(0.0, 0.0), (0.0, 0.0), (0.0, 0.9999999999999998), (0.0, 0.0), (0.0, 0.0), (0.0, 0.0), (0.0, 0.0), (0.0, 0.0)],
+ [(0.0, 0.0), (0.0, -0.9999999999999998), (0.0, 0.0), (0.0, 0.0), (0.0, 0.0), (0.0, 0.0), (0.0, 0.0), (0.0, 0.0)],
+ [(0.0, 0.0), (0.0, 0.0), (0.0, 0.0), (0.0, 0.9999999999999998), (0.0, 0.0), (0.0, 0.0), (0.0, 0.0), (0.0, 0.0)],
+ [(0.0, 0.0), (0.0, 0.0), (0.0, 0.0), (0.0, 0.0), (0.0, 0.0), (0.0, -0.9999999999999998), (0.0, 0.0), (0.0, 0.0)],
+ [(0.0, 0.0), (0.0, 0.0), (0.0, 0.0), (0.0, 0.0), (0.0, 0.0), (0.0, 0.0), (0.0, 0.0), (0.0, 0.9999999999999998)],
+ [(0.0, 0.0), (0.0, 0.0), (0.0, 0.0), (0.0, 0.0), (0.0, -0.9999999999999998), (0.0, 0.0), (0.0, 0.0), (0.0, 0.0)],
+ [(0.0, 0.0), (0.0, 0.0), (0.0, 0.0), (0.0, 0.0), (0.0, 0.0), (0.0, 0.0), (0.0, 0.9999999999999998), (0.0, 0.0)]]
+[1]> f (map C.i64 [1,0,0,0,0,0,0,0])
+[(0.0, -0.9999999999999998), (0.0, 0.0), (0.0, 0.0), (0.0, 0.0), (0.0, 0.0), (0.0, 0.0), (0.0, 0.0), (0.0, 0.0)]
+    ```
+	Futhark is available for most
+    operating systems, including Linux and macos. More information about Futhark
+    is available from [http://futhark-lang.org](http://futhark-lang.org).
+
 ## Project Suggestions
 
 1. Implement tooling, based on the [4] (but simplified) to find alternative
@@ -143,10 +175,11 @@ Result distribution when evaluating c on |101> :
 3. Implement a larger quantum algorithm of choice using the Standard ML
    framework.
 
-4. Explore the possibility of using alternative (nested) matrix representations
-   for specifying the semantics of circuits. Currently, tensor products are
-   expanded eagerly, although using pull-arrays, but sparsity and algebraic
-   properties are not exploited.
+4. Investigate the possibility for simulating quantum circuits involving only
+   the Clifford gates efficiently using compact state representations.
+
+5. Explore the possibility of writing transformations that push `T` gates to the
+   end of a circuit and control-gates to the beginning of a circuit.
 
 ## Literature
 
