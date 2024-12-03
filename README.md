@@ -19,6 +19,10 @@ mlkit`, assuming you have Homebrew installed.
 
 On Linux, you may download binaries from the respective repositories.
 
+The framework also supports the generation of [Futhark](http://futhark-lang.org)
+[5] code for simulating circuits. Futhark is available for most platforms. For
+installation details, see [http://futhark-lang.org](http://futhark-lang.org).
+
 ## Compiling the Source Code
 
 To compile the source code and run the tests, just execute `make test` in the
@@ -135,7 +139,7 @@ Result distribution when evaluating c on |101> :
 10. Compare the performance of the Kronecker-free interpreter with the
     performance of the `eval` function.
 
-11. Synthesize a Futhark simulator for a specific quantum circuit and run it
+11. Synthesize a Futhark [5] simulator for a specific quantum circuit and run it
     with different state vectors. You may start by copying the files
     `comp_ex1.sml` and `comp_ex1.mlb` available in the `src` folder. The
     `Makefile` contains code for generating a file `ex1.fut` containing a
@@ -200,3 +204,8 @@ generation of circuit
 identities](https://iopscience.iop.org/article/10.1088/2058-9565/ad5b16/pdf). Quantum
 Science and Technology, Volume 9, Number 4. July 2024. Published by IOP
 Publishing Ltd. https://doi.org/10.1088/2058-9565/ad5b16.
+
+[5] Martin Elsman, Troels Henriksen, and Cosmin Oancea. Parallel Programming in
+Futhark. Edition 0.8. Department of Computer Science, University of
+Copenhagen. Edition Nov
+22, 2023. [latest-pdf](https://readthedocs.org/projects/futhark-book/downloads/pdf/latest/).
