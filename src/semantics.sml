@@ -18,7 +18,7 @@ structure Semantics :> SEMANTICS = struct
       end
 
   fun pp_mat (m:mat) : string =
-      let val m = M.map pp_c m
+      let val m = M.map pp_c m |> M.memoize
           val sz = foldl (fn (e,a) => Int.max(a,size e)) 1
                          (List.concat (M.listlist m))
       in M.pp sz (fn x => x) m
@@ -26,7 +26,7 @@ structure Semantics :> SEMANTICS = struct
 
   (* Semantics *)
   fun matmul (t1:mat,t2:mat) : mat =
-      M.matmul_gen C.* C.+ (C.fromInt 0) t1 t2
+      M.matmul_gen C.* C.+ (C.fromInt 0) t1 t2 |> M.memoize
 
   (* See https://en.wikipedia.org/wiki/Kronecker_product *)
   fun tensor (a: mat,b:mat) : mat =
@@ -38,7 +38,7 @@ structure Semantics :> SEMANTICS = struct
                      fn (i,j) =>
                         C.* (M.sub(a,i div p, j div q),
                              M.sub(b,i mod p, j mod q))
-                   )
+                   ) |> M.memoize
       end
 
   (* Generalised control - see Feynman '59:
