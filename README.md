@@ -185,6 +185,14 @@ Result distribution when evaluating c on |101> :
 5. Explore the possibility of writing transformations that push `T` gates to the
    end of a circuit and control-gates to the beginning of a circuit.
 
+6. Compare (both practically and theoretically) the state vector simulator
+   developed here with the [Qiskit Aer](https://qiskit.github.io/qiskit-aer/)
+   state vector simulator [6,7], in particular with respect to run-time
+   complexity.
+
+7. Implement a couple of the circuits evaluated in [7] in the framework
+   presented here and evaluate their performance.
+
 ## Literature
 
 [1] Phillip Kaye, Raymond Laflamme, and Michele Mosca. [An Introduction to
@@ -209,3 +217,13 @@ Publishing Ltd. https://doi.org/10.1088/2058-9565/ad5b16.
 Futhark. Edition 0.8. Department of Computer Science, University of
 Copenhagen. Edition Nov
 22, 2023. [latest-pdf](https://readthedocs.org/projects/futhark-book/downloads/pdf/latest/).
+
+[6] Jun Doi and Hiroshi Horii. Cache Blocking Technique to Large Scale Quantum
+Computing Simulation on Supercomputers. 2020 IEEE International Conference on
+Quantum Computing and Engineering (QCE), Denver, CO, USA, 2020, pp. 212-222,
+2020. https://doi.org/10.1109/QCE49297.2020.00035
+
+[7] Jennifer Faj, Ivy Peng, Jacob Wahlgren, Stefano Markidis. Quantum Computer
+Simulations at Warp Speed: Assessing the Impact of GPU Acceleration A Case Study
+with IBM Qiskit Aer, Nvidia Thrust & cuQuantum. July 2023.
+https://doi.org/10.48550/arXiv.2307.14860
