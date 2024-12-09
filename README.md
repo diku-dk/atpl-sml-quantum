@@ -174,10 +174,12 @@ Result distribution when evaluating c on |101> :
    (sub-)circuits of degree _n_, for some small _n_.
 
 2. Investigate possibilities for identifying if two qubits are entangled by a
-   circuit.
+   circuit [8,9].
 
-3. Implement a larger quantum algorithm of choice using the Standard ML
-   framework.
+3. Implement a larger quantum algorithm (e.g., [Grover's
+   algorithm](https://en.wikipedia.org/wiki/Grover%27s_algorithm)) of choice
+   using the Standard ML framework. You may get inspiration from the [Quantum
+   Algorithm Zoo](https://quantumalgorithmzoo.org/).
 
 4. Investigate the possibility for simulating quantum circuits involving only
    the Clifford gates efficiently using compact state representations.
@@ -227,3 +229,14 @@ Quantum Computing and Engineering (QCE), Denver, CO, USA, 2020, pp. 212-222,
 Simulations at Warp Speed: Assessing the Impact of GPU Acceleration A Case Study
 with IBM Qiskit Aer, Nvidia Thrust & cuQuantum. July 2023.
 https://doi.org/10.48550/arXiv.2307.14860
+
+[8] Perdrix, S. (2008). Quantum Entanglement Analysis Based on Abstract
+Interpretation. In: Alpuente, M., Vidal, G. (eds) Static
+Analysis. SAS 2008. Lecture Notes in Computer Science, vol 5079. Springer,
+Berlin, Heidelberg. https://doi.org/10.1007/978-3-540-69166-2_18
+
+[9] Nicola Assolini, Alessandra Di Pierro, and Isabella
+Mastroeni. 2024. Abstracting Entanglement. In Proceedings of the 10th ACM
+SIGPLAN International Workshop on Numerical and Symbolic Abstract Domains (NSAD
+'24). Association for Computing Machinery, New York, NY, USA,
+34–41. https://doi.org/10.1145/3689609.3689998
