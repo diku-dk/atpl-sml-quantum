@@ -1,7 +1,8 @@
 val () = print "Testing: Semantics\n"
 
 open Circuit Semantics
-infix 4 ** infix 3 oo
+infix 3 ++
+infix 4 **
 
 fun err s = raise Fail ("TestSemantics: " ^ s)
 
@@ -60,18 +61,18 @@ fun run t (g:t) (k:ket) : unit =
     in ()
     end
 
-val () = run "Double Beam-Splitter" (H oo H) (ket[0])
+val () = run "Double Beam-Splitter" (H ++ H) (ket[0])
 
-val () = run "Two Qubits (NOT on second qubit)" ((H oo H) ** X) (ket[0,1])
+val () = run "Two Qubits (NOT on second qubit)" ((H ++ H) ** X) (ket[0,1])
 
-val () = run "Two Qubits Swapped" ((H oo H) ** X oo SW) (ket[0,1])
+val () = run "Two Qubits Swapped" ((H ++ H) ** X ++ SW) (ket[0,1])
 
-val () = run "Swap" (I ** SW oo SW ** I) (ket[0,1,1])
+val () = run "Swap" (I ** SW ++ SW ** I) (ket[0,1,1])
 
-val () = run "SwapSwap" (SW oo X ** X oo SW) (ket[1,0])
+val () = run "SwapSwap" (SW ++ X ** X ++ SW) (ket[1,0])
 
-val () = run "Swap with Y" (SW oo Y ** X oo SW) (ket[1,0])
+val () = run "Swap with Y" (SW ++ Y ** X ++ SW) (ket[1,0])
 
 val () = print "The following two systems are identical\n"
-val () = run "System 1" ((I ** H) oo C X oo (Z ** Z) oo C X oo (I ** H)) (ket[1,0])
+val () = run "System 1" ((I ** H) ++ C X ++ (Z ** Z) ++ C X ++ (I ** H)) (ket[1,0])
 val () = run "System 2" (I ** X) (ket[1,0])

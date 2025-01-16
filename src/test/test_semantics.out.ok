@@ -1,6 +1,6 @@
 Testing: Semantics
 *** Example: Double Beam-Splitter
-Diagram of g = H oo H:
+Diagram of g = H ++ H:
   .---. .---.  
 --| H |-| H |--
   '---' '---'  
@@ -15,7 +15,7 @@ State Distribution:
 Testing interpretation against semantics: OK
 ***
 *** Example: Two Qubits (NOT on second qubit)
-Diagram of g = (H oo H) ** X:
+Diagram of g = (H ++ H) ** X:
   .---. .---.  
 --| H |-| H |--
   '---' '---'  
@@ -38,7 +38,7 @@ State Distribution:
 Testing interpretation against semantics: OK
 ***
 *** Example: Two Qubits Swapped
-Diagram of g = (H oo H) ** X oo SW:
+Diagram of g = (H ++ H) ** X ++ SW:
   .---. .---.        
 --| H |-| H |-.   .--
   '---' '---'  \ /   
@@ -61,7 +61,7 @@ State Distribution:
 Testing interpretation against semantics: OK
 ***
 *** Example: Swap
-Diagram of g = I ** SW oo SW ** I:
+Diagram of g = I ** SW ++ SW ** I:
                
 --------.   .--
          \ /   
@@ -96,7 +96,7 @@ State Distribution:
 Testing interpretation against semantics: OK
 ***
 *** Example: SwapSwap
-Diagram of g = SW oo X ** X oo SW:
+Diagram of g = SW ++ X ** X ++ SW:
         .---.        
 --.   .-| X |-.   .--
    \ /  '---'  \ /   
@@ -119,7 +119,7 @@ State Distribution:
 Testing interpretation against semantics: OK
 ***
 *** Example: Swap with Y
-Diagram of g = SW oo Y ** X oo SW:
+Diagram of g = SW ++ Y ** X ++ SW:
         .---.        
 --.   .-| Y |-.   .--
    \ /  '---'  \ /   
@@ -143,7 +143,7 @@ Testing interpretation against semantics: OK
 ***
 The following two systems are identical
 *** Example: System 1
-Diagram of g = I ** H oo CX oo Z ** Z oo CX oo I ** H:
+Diagram of g = I ** H ++ CX ++ Z ** Z ++ CX ++ I ** H:
               .---.              
 ----------*---| Z |---*----------
           |   '---'   |          

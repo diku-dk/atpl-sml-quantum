@@ -1,5 +1,5 @@
 local $(SML_LIB)/basis/basis.mlb
-      ../diagram.sml
+      ../diagram.mlb
       ../circuit.sig
       ../circuit.sml
 in

@@ -11,7 +11,7 @@ sig
   val toString : t -> string
 end
 
-structure Diagram : DIAGRAM =
+structure Diagram :> DIAGRAM =
 struct
   type t = string list  (* lines; invariant: lines have equal size *)
 

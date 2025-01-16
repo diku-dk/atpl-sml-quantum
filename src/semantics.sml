@@ -61,22 +61,22 @@ structure Semantics :> SEMANTICS = struct
   fun sem (t:Circuit.t) : mat =
       let open Circuit
           val c0 = C.fromInt 0
-          val c1 = C.fromInt 1
-          val cn1 = C.~ c1
           val ci = C.fromIm 1.0
-          val cni = C.~ ci
+          val rsqrt2 = C.fromRe (1.0 / Math.sqrt 2.0)
+          val rsqrt2eipi4 = C.*(rsqrt2,C.exp(C.fromIm(Math.pi/4.0)))
       in case t of
              I => fromIntM [[1,0],
                             [0,1]]
            | X => fromIntM [[0,1],
                             [1,0]]
-           | Y => M.fromListList [[c0,cni],
+           | Y => M.fromListList [[c0,C.~ ci],
                                   [ci,c0]]
-           | Z => fromIntM [[1,0],[0,~1]]
-           | H => let val rsqrt2 = C.fromRe (1.0 / Math.sqrt 2.0)
-                  in M.fromListList [[rsqrt2,rsqrt2],
-                                     [rsqrt2,C.~ rsqrt2]]
-                  end
+           | Z => fromIntM [[1,0],
+                            [0,~1]]
+           | H => M.fromListList [[rsqrt2,rsqrt2],
+                                  [rsqrt2,C.~ rsqrt2]]
+           | T => M.fromListList [[rsqrt2,c0],
+                                  [c0,rsqrt2eipi4]]
            | SW => fromIntM [[1,0,0,0],
                              [0,0,1,0],
                              [0,1,0,0],
@@ -142,8 +142,7 @@ structure Semantics :> SEMANTICS = struct
   type vec = state
 
   fun flatten (a:mat) : vec =
-      let val rows = M.nRows a
-          val cols = M.nCols a
+      let val (rows,cols) = M.dimensions a
       in Vector.tabulate(rows * cols,
                          fn i => M.sub(a,i div cols,i mod cols))
       end
@@ -174,11 +173,9 @@ structure Semantics :> SEMANTICS = struct
       case t of
           Circuit.Seq(t1,t2) => interp t2 (interp t1 v)
         | Circuit.Tensor(A,B) =>
-          let val Af = interp A
-              val Bf = interp B
-              val V = unvec (pow2(Circuit.dim A),pow2(Circuit.dim B)) v
-              val W = mapRows Bf (M.transpose V)
-              val Y = mapRows Af (M.transpose W)
+          let val V = unvec (pow2(Circuit.height A),pow2(Circuit.height B)) v
+              val W = mapRows (interp B) (M.transpose V)
+              val Y = mapRows (interp A) (M.transpose W)
           in vec Y
           end
         | Circuit.C A =>
@@ -187,5 +184,4 @@ structure Semantics :> SEMANTICS = struct
           end
         | Circuit.I => v
         | _ => eval t v
-
 end

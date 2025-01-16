@@ -1,11 +1,12 @@
 
 open Circuit Semantics
-infix 3 oo
+infix 3 ++
 infix 4 **
 
 fun run c k =
     (print ("Circuit for c = " ^ pp c ^ ":\n");
      print (draw c ^ "\n");
+     print (draw_latex c ^ "\n");
      print ("Semantics of c:\n" ^ pp_mat(sem c) ^ "\n");
      print ("Result distribution when evaluating c on " ^ pp_ket k ^ " :\n");
      let val v0 = init k
@@ -15,4 +16,4 @@ fun run c k =
       ; print ("V2: " ^ pp_state (interp c v0) ^ "\n")
      end)
 
-val () = run ((I ** H oo C X oo Z ** Z oo C X oo I ** H) ** I oo I ** SW oo C X ** Y) (ket[1,0,1])
+val () = run ((I ** H ++ C X ++ Z ** Z ++ C X ++ I ** H) ** I ++ I ** SW ++ C X ** Y) (ket[1,0,1])
