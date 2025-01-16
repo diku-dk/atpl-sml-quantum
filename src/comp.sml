@@ -35,29 +35,30 @@ structure Comp :> COMP = struct
            | Y => ret (APP("Y",[]))
            | Z => ret (APP("Z",[]))
            | H => ret (APP("H",[]))
+           | T => ret (APP("T",[]))
            | SW => ret (APP("SW",[]))
            | Seq(t1,t2) =>
              comp t1 >>= (fn e1 =>
              comp t2 >>= (fn e2 =>
-             let val n = Int.toString (pow2 (dim t))
+             let val n = Int.toString (pow2 (height t))
                  val ty = "[" ^ n ^ "][" ^ n ^ "]C.complex"
              in ret (TYPED(APP("matmul", [e2,e1]),ty))
              end))
            | Tensor(t1,t2) =>
              comp t1 >>= (fn e1 =>
              comp t2 >>= (fn e2 =>
-             let val n = Int.toString (pow2 (dim t))
+             let val n = Int.toString (pow2 (height t))
                  val ty = "[" ^ n ^ "][" ^ n ^ "]C.complex"
              in ret (TYPED(APP("tensor", [e1,e2]),ty))
              end))
            | C t' => comp t' >>= (fn e =>
-             let val n = Int.toString (pow2 (dim t))
+             let val n = Int.toString (pow2 (height t))
                  val ty = "[" ^ n ^ "][" ^ n ^ "]C.complex"
              in ret (TYPED(APP("control",[e]),ty))
              end)
       end
 
-  fun vecTyFromDim d =
+  fun vecTyFromHeight d =
       "[" ^ Int.toString(pow2 d) ^ "]C.complex"
 
   local
@@ -73,7 +74,7 @@ structure Comp :> COMP = struct
         end
     fun FunC A (f:F.exp -> F.exp F.M) : F.var option F.M =
         if allI A then ret NONE
-        else let val ty = vecTyFromDim (Circuit.dim A)
+        else let val ty = vecTyFromHeight (Circuit.height A)
              in Fun f ty ty >>= (ret o SOME)
              end
     fun splitF d v =
@@ -81,7 +82,7 @@ structure Comp :> COMP = struct
                      Int.toString (pow2 d) ^ "]C.complex"
         in APP("split",[TYPED(v,ty)])
         end
-    fun concatF d a b = TYPED(APP("concat",[a,b]),vecTyFromDim d)
+    fun concatF d a b = TYPED(APP("concat",[a,b]),vecTyFromHeight d)
     fun unvecF (e,ty) = APP("unvec", [TYPED(e,ty)])
     fun vecF e = APP("vec",[e])
     fun mapF f e = APP("map", [VAR f,e])
@@ -95,25 +96,26 @@ structure Comp :> COMP = struct
             Circuit.I => ret v
           | Circuit.Seq(t1,t2) => icomp t1 v >>= (icomp t2)
           | Circuit.C t' =>
-            Let (splitF (Circuit.dim t') v) >>= (fn p =>
+            Let (splitF (Circuit.height t') v) >>= (fn p =>
             icomp t' (SEL(1,VAR p)) >>= (fn v1 =>
-            ret (concatF (Circuit.dim t) (SEL(0,VAR p)) v1)))
+            ret (concatF (Circuit.height t) (SEL(0,VAR p)) v1)))
           | Circuit.Tensor(A,B) =>
             FunC A (icomp A) >>= (fn Af =>
             FunC B (icomp B) >>= (fn Bf =>
-            let val dA = pow2(Circuit.dim A)
-                val dB = pow2(Circuit.dim B)
+            let val dA = pow2(Circuit.height A)
+                val dB = pow2(Circuit.height B)
                 val ty = "[" ^ Int.toString dA ^ "*" ^
                          Int.toString dB ^ "]C.complex"
             in Let (unvecF(v,ty)) >>= (fn V =>
                Let (mapF' Bf (transposeF (VAR V))) >>= (fn W =>
                Let (mapF' Af (transposeF (VAR W))) >>= (fn Y =>
-               ret (TYPED(vecF (VAR Y),vecTyFromDim (Circuit.dim t))))))
+               ret (TYPED(vecF (VAR Y),vecTyFromHeight (Circuit.height t))))))
             end))
-          | Circuit.H => ret (matvecmulF (APP("H",[])) v)
           | Circuit.X => ret (matvecmulF (APP("X",[])) v)
           | Circuit.Y => ret (matvecmulF (APP("Y",[])) v)
           | Circuit.Z => ret (matvecmulF (APP("Z",[])) v)
+          | Circuit.H => ret (matvecmulF (APP("H",[])) v)
+          | Circuit.T => ret (matvecmulF (APP("T",[])) v)
           | Circuit.SW => ret (matvecmulF (APP("SW",[])) v)
   end
 
@@ -126,20 +128,24 @@ structure Comp :> COMP = struct
           val cni = APP("C.mk_im", [CONST "(-1)"])
           val rsqrt2 = APP("C.mk_re", [CONST "(1.0 / f64.sqrt(2.0))"])
           val rnsqrt2 = APP("C.mk_re", [CONST "((-1.0) / f64.sqrt(2.0))"])
+          val tmp = APP("C.exp", [APP("C.mk_im",[CONST "(f64.pi/4)"])])
+          val rsqrt2eipi4 = APP("C.*", [rsqrt2,tmp])
           fun ty n = "[" ^ Int.toString n ^ "][" ^ Int.toString n ^ "]C.complex"
           fun binds nil = ret ()
             | binds ((s,n,e)::rest) =
               FunNamed s (fn _ => ret e) "()" (ty n) >>= (fn _ => binds rest)
       in binds [("I", 2, ARR[ARR[c1,c0],
                              ARR[c0,c1]]),
-                ("H", 2, ARR[ARR[rsqrt2,rsqrt2],
-                             ARR[rsqrt2,rnsqrt2]]),
                 ("X", 2, ARR[ARR[c0,c1],
                              ARR[c1,c0]]),
                 ("Y", 2, ARR[ARR[c0,cni],
                              ARR[ci,c0]]),
                 ("Z", 2, ARR[ARR[c1,c0],
                              ARR[c0,cn1]]),
+                ("H", 2, ARR[ARR[rsqrt2,rsqrt2],
+                             ARR[rsqrt2,rnsqrt2]]),
+                ("T", 2, ARR[ARR[rsqrt2,c0],
+                             ARR[c0,rsqrt2eipi4]]),
                 ("SW", 4, ARR[ARR[c1,c0,c0,c0],
                               ARR[c0,c0,c1,c0],
                               ARR[c0,c1,c0,c0],
@@ -156,7 +162,7 @@ structure Comp :> COMP = struct
 
   fun circuitToFutFunBind (f:string) (t:Circuit.t) : string =
       let open F infix >>=
-          val ty = vecTyFromDim (Circuit.dim t)
+          val ty = vecTyFromHeight (Circuit.height t)
       in runBinds (FunNamed f (icomp t) ty ty >>= (fn _ =>
                    ret()))
       end

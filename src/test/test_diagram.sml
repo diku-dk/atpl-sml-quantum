@@ -4,12 +4,12 @@ open Diagram
 val H = box "H"
 val I = box "I"
 val X = box "X"
-infix 7 **
-infix 3 oo
+infix 3 ++
+infix 4 **
 val op ** = par
-val op oo = seq
-val d = ((H oo I oo H) ** (H oo X oo I)) oo swap oo cntrl "H"
-val d' = H**H oo I**X oo H**I oo swap oo cntrl "H"
+val op ++ = seq
+val d = ((H ++ I ++ H) ** (H ++ X ++ I)) ++ swap ++ cntrl "H"
+val d' = H**H ++ I**X ++ H**I ++ swap ++ cntrl "H"
 val () = print(if toString d = toString d' then "Eq OK\n" else "Eq Err\n")
-val d2 = d ** (I oo H)
+val d2 = d ** (I ++ H)
 val () = print (toString d2 ^ "\n")
